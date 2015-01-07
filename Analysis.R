@@ -10,7 +10,7 @@ output: html_document
 ##Loading the data##
 
 Load the data
-```{r}
+```{r, echo=TRUE}
 activity = read.csv("activity.csv")
 
 ```
@@ -109,6 +109,7 @@ cat("Total ", count, "NA values were filled.\n\r")
 ```{r, echo=TRUE}
 totalSteps2 <- aggregate(steps ~ date, data = activityFilled, sum)
 hist(totalSteps2$steps)
+plot of chunk unnamed-chunk-10
 
 mean(totalSteps2$steps)
 median(totalSteps2$steps)
@@ -119,29 +120,31 @@ median(totalSteps2$steps)
 The mean total number of steps taken per day is 1.0766 × 104 steps.
 The median total number of steps taken per day is 1.0766 × 104 steps.
 
-##Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
-The mean value is the same as the value before imputing missing data because we put the mean value for that particular 5-min interval. The median value shows a little difference : but it depends on where the missing values are.
+: The mean value is the same as the value before imputing missing data because we put the mean value for that particular 5-min interval. The median value shows a little difference : but it depends on where the missing values are.
 
-## Are there differences in activity patterns between weekdays and weekends?
+Are there differences in activity patterns between weekdays and weekends?
 
-##Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
-```{r, echo=TRUE}
+Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
 activityFilled$day = ifelse(as.POSIXlt(as.Date(activityFilled$date))$wday%%6 == 
     0, "weekend", "weekday")
-
 # For Sunday and Saturday : weekend, Other days : weekday
 activityFilled$day = factor(activityFilled$day, levels = c("weekday", "weekend"))
-
-```
-
-## Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). The plot should look something like the following, which was creating using simulated data:
-```{r}
+Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). The plot should look something like the following, which was creating using simulated data:
 stepsInterval2 = aggregate(steps ~ interval + day, activityFilled, mean)
 library(lattice)
 xyplot(steps ~ interval | factor(day), data = stepsInterval2, aspect = 1/2, 
     type = "l")
-
+plot of chunk unnamed-chunk-12
+```{r}
+summary(cars)
 ```
 
+You can also embed plots, for example:
 
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
